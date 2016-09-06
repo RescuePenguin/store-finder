@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title VerveChallenge
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    .col-md-8.col-md-offset-2 style='min-height: 100vh; padding-bottom: 60px;'
+      #header.row style='height: 80px; margin-bottom: 40px;'
+        h2 style='text-align: center;' Jake's Fantastic Store Locator
+      = yield
+
+      #footer.row style='position: absolute; bottom: 0; height: 60px; width: 100%; background-color: rgba(0, 0, 0, .5)'
