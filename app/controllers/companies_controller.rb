@@ -1,9 +1,10 @@
 class CompaniesController < ApplicationController
-  def new
-  end
+  require 'csv'
 
   def create
-    @company = Company.new(company_params)
+    @company = Company.new
+    parsed_file = CSV.read params[:company][:upload].tempfile, col_sep: "\t", headers: true, header_converters: :symbol
+    @company.locations.build parsed_file.map(&:to_hash)
 
     @company.save
     redirect_to @company
@@ -13,11 +14,5 @@ class CompaniesController < ApplicationController
   end
 
   def show
-  end
-
-  private
-
-  def company_params
-    params.require(:company).permit(:name)
   end
 end
