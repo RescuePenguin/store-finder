@@ -1,0 +1,9 @@
+h1 Company Locations
+
+p Searching for All locations near #{@latitude}, #{@longitude}
+ul#locations-list
+  - @locations.each do |location|
+    li.row
+      .col-md-3 = location.address_1
+      .col-md-3 = location.postal_code_name
+      .col-md-3 = location.distance.round(2)
