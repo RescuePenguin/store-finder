@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'geocoder'
+gem 'kaminari', github: "amatsuda/kaminari", branch: '0-17-stable'
 
 gem 'rubocop'
 

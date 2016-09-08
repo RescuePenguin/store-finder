@@ -33,6 +33,6 @@ class CompaniesController < ApplicationController
     @radius = params[:radius].present? ? params[:radius] : 25
     @latitude =  params[:search].present? ? search.latitude : default_loc.latitude
     @longitude = params[:search].present? ? search.longitude : default_loc.longitude
-    @locations = @company.locations.near([@latitude, @longitude], @radius).limit(50)
+    @locations = @company.locations.near([@latitude, @longitude], @radius).page(params[:page]).per(50)
   end
 end

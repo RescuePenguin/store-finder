@@ -30,6 +30,8 @@
           .col-xs-4 = location.postal_code_name
           .col-xs-4 = location.distance.round(2)
 
+= paginate @locations
+
 = content_for :bottom do
   javascript:
     function initMap(){

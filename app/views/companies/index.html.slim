@@ -9,3 +9,5 @@ ol#locations-list.list-group
       .col-xs-4 = company.locations.first.name
       .col-xs-4 = company.created_at.strftime('%b %d, %y')
       .col-xs-1.col-offset-3 = link_to 'View', company
+
+= paginate @companies
