@@ -1,0 +1,7 @@
+h1 Companies
+
+ol#locations-list
+  - @companies.each do |company|
+    li.row
+      .col-md-3 = company.locations.first.name
+      .col-md-3 = link_to 'View', company

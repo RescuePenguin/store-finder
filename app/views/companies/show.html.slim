@@ -1,7 +1,18 @@
-h1 Company Locations
+.row
+  h1 Company Locations
 
-p Searching for All locations near #{@latitude}, #{@longitude}
-ul#locations-list
+.row
+  = form_tag @company, :method => :get
+    p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search Near", :name => nil
+.row
+  p Searching for All locations near #{@latitude}, #{@longitude}
+ol#locations-list
+  li.row
+    .col-md-3 Address
+    .col-md-3 Postal Code
+    .col-md-3 Distance(in miles)
   - @locations.each do |location|
     li.row
       .col-md-3 = location.address_1

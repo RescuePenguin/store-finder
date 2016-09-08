@@ -3,6 +3,12 @@
     h2 Welcome
     = form_for @company do |f|
       p Please upload a file with the list of your store locations (.tsv)
+      p#alert style='color: red; font-weight: bold' = alert
       = f.file_field 'upload'
 
       = f.submit
+
+    br
+    br
+    br
+    p Or #{link_to "View", companies_path} all current companies
