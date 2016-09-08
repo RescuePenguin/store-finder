@@ -1,7 +1,11 @@
-h1 Companies
+h2 Companies
 
-ol#locations-list
+ol#locations-list.list-group
+  li.list-group-item.row
+    .col-xs-4 style='font-weight: bold' Name
+    .col-xs-4 style='font-weight: bold' Created
   - @companies.each do |company|
-    li.row
-      .col-md-3 = company.locations.first.name
-      .col-md-3 = link_to 'View', company
+    li.list-group-item.row.col-xs-12
+      .col-xs-4 = company.locations.first.name
+      .col-xs-4 = company.created_at.strftime('%b %d, %y')
+      .col-xs-1.col-offset-3 = link_to 'View', company

@@ -8,8 +8,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     .col-md-8.col-md-offset-2 style='min-height: 100vh; padding-bottom: 60px;'
-      #header.row style='height: 80px; margin-bottom: 40px;'
+      #header.row style='height: 80px;'
         h2 style='text-align: center;' = link_to "Jake\'s Fantastic Store Locator", root_path, class: 'logo'
       = yield
 
-      #footer.row style='position: absolute; bottom: 0; height: 60px; width: 100%;'
+    = yield :bottom
+    = javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC6njESh9SsPB4fIkSHC3XqGIrYMFSAmDo&callback=initMap'

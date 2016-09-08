@@ -1,20 +1,53 @@
 .row
-  h1 Company Locations
+  .col-xs-12
+    h2 Company Locations
 
 .row
-  = form_tag @company, :method => :get
-    p
-    = text_field_tag :search, params[:search]
-    = submit_tag "Search Near", :name => nil
+  .col-xs-12
+    = form_tag @company, :method => :get
+      = text_field_tag :search, params[:search], class: 'form-control col-xs-6', style: 'width: 50%', placeholder: "Search..."
+      = select_tag :radius, options_for_select([ 5, 10, 25, 50, 100, ['unlimited', 12451] ], @radius)
+      = submit_tag "Search", :name => nil
 .row
-  p Searching for All locations near #{@latitude}, #{@longitude}
-ol#locations-list
-  li.row
-    .col-md-3 Address
-    .col-md-3 Postal Code
-    .col-md-3 Distance(in miles)
-  - @locations.each do |location|
-    li.row
-      .col-md-3 = location.address_1
-      .col-md-3 = location.postal_code_name
-      .col-md-3 = location.distance.round(2)
+  .col-xs-12
+    p Searching for All locations near #{@latitude.round(4)}, #{@longitude.round(4)}
+
+.row
+  #map style='height: 500px;'
+.row style='margin-top: 25px;'
+  ol#locations-list.list-group
+    - if @locations.empty?
+      li.list-group-item.row
+        .col-xs-12 There are no locations within the radius of #{@radius} miles
+    - else
+      li.list-group-item.row
+        .col-xs-4 style='font-weight: bold' Address
+        .col-xs-4 style='font-weight: bold' Postal Code
+        .col-xs-4 style='font-weight: bold' Distance(in miles)
+      - @locations.each do |location|
+        li.list-group-item.row
+          .col-xs-4 = location.address_1
+          .col-xs-4 = location.postal_code_name
+          .col-xs-4 = location.distance.round(2)
+
+= content_for :bottom do
+  javascript:
+    function initMap(){
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: #{@latitude}, lng: #{@longitude}},
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      var locations = #{@locations.map{|loc| [loc.latitude, loc.longitude,]}};
+
+      var marker, i;
+
+      for (i = 0; i < locations.length; i++) {
+        marker = new google.maps.Marker({
+          position: {lat: locations[i][0], lng: locations[i][1]},
+          map: map
+        });
+      }
+    }
+
