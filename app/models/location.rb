@@ -5,6 +5,7 @@ class Location < ApplicationRecord
   after_validation :geocode
 
   def full_address
-    address_1 + address_2 + postal_code_name.to_s + postal_code_suffix.to_s
+    (address_1.present? ? address_1 : '') + (address_2.present? ? address_2 : '') +
+      (postal_code_name.present? ? postal_code_name.to_s : '') + (postal_code_suffix.present? ? postal_code_suffix.to_s : '')
   end
 end
