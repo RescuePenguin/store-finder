@@ -1,7 +1,13 @@
-a.logo {
-  color: black;
+.logo {
+  color: #000;
+
   &:hover {
-    color: black;
+    color: #000;
     text-decoration: none;
   }
+}
+
+.alert {
+  color: #f00;
+  font-weight: bold;
 }

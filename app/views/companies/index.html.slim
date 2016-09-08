@@ -1,13 +1,15 @@
+// app/views/companies/index
+// Listing all companies that had been uploaded
 h2 Companies
-
 ol#locations-list.list-group
   li.list-group-item.row
-    .col-xs-4 style='font-weight: bold' Name
-    .col-xs-4 style='font-weight: bold' Created
+    .col-xs-4.list-headers Name
+    .col-xs-4.list-headers Created
   - @companies.each do |company|
     li.list-group-item.row.col-xs-12
       .col-xs-4 = company.locations.first.name
-      .col-xs-4 = company.created_at.strftime('%b %d, %y')
+      .col-xs-4 = company.created_at.strftime('%b %d, %y') # Sep 08, 2016
       .col-xs-1.col-offset-3 = link_to 'View', company
 
+// Kaminari pagination to keep our individual page load times lower
 = paginate @companies

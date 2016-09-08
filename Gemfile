@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass'
 
+# Use Slim for a smoother/more readable/more rubylike html experience
 gem 'slim'
 
 # Use jquery as the JavaScript library
@@ -29,11 +30,15 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Use Geocoder for geolocation services
 gem 'geocoder'
+# Use Kaminari for pagination
 gem 'kaminari', github: "amatsuda/kaminari", branch: '0-17-stable'
+# Use Sidekiq & Sinatra for background processes. Key use being for handling geocoding asynchronously.
 gem 'sidekiq'
 gem 'sinatra', github: 'sinatra'
 
+# Use rubocop to keep the code clean and abide formatting standards.
 gem 'rubocop'
 
 # Use Capistrano for deployment

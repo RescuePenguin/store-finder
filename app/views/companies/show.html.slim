@@ -4,6 +4,7 @@
 
 .row
   .col-xs-12
+    // Search field for ssearching for nearby stores/recenterring the map elsewhere.
     = form_tag @company, :method => :get
       = text_field_tag :search, params[:search], class: 'form-control col-xs-6', style: 'width: 50%', placeholder: "Search..."
       = select_tag :radius, options_for_select([ 5, 10, 25, 50, 100, ['unlimited', 12451] ], @radius)
@@ -13,27 +14,30 @@
     p Searching for All locations near #{@latitude.round(4)}, #{@longitude.round(4)}
 
 .row
-  #map style='height: 500px;'
-.row style='margin-top: 25px;'
+  #map.map
+.row.top-spacer
   ol#locations-list.list-group
     - if @locations.empty?
       li.list-group-item.row
         .col-xs-12 There are no locations within the radius of #{@radius} miles
     - else
       li.list-group-item.row
-        .col-xs-4 style='font-weight: bold' Address
-        .col-xs-4 style='font-weight: bold' Postal Code
-        .col-xs-4 style='font-weight: bold' Distance(in miles)
+        .col-xs-4.list-headers Address
+        .col-xs-4.list-headers Postal Code
+        .col-xs-4.list-headers Distance(in miles)
       - @locations.each do |location|
         li.list-group-item.row
           .col-xs-4 = location.address_1
           .col-xs-4 = location.postal_code_name
           .col-xs-4 = location.distance.round(2)
 
+// Kaminari pagination to keep our individual page load times lower
+// TODO: Make this an AJAX function. Requires adding JS to add new stores to the google map above.
 = paginate @locations
 
 = content_for :bottom do
   javascript:
+    // Initialize our google map.
     function initMap(){
       var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: #{@latitude}, lng: #{@longitude}},
@@ -41,10 +45,12 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
+      // Grab all  of our locations into a javascript variable
       var locations = #{@locations.map{|loc| [loc.latitude, loc.longitude,]}};
 
       var marker, i;
 
+      // Make markers for all of our store locations, so they can be found on the map.
       for (i = 0; i < locations.length; i++) {
         marker = new google.maps.Marker({
           position: {lat: locations[i][0], lng: locations[i][1]},
