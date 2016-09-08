@@ -10,20 +10,23 @@ class CompaniesController < ApplicationController
     if params[:company][:upload].nil?
       flash[:alert] = 'Please upload a .tsv file'
       return redirect_to new_company_path
-    end
-    if !['.tsv'].include? File.extname(params[:company][:upload].tempfile)
+    elsif !['.tsv'].include? File.extname(params[:company][:upload].tempfile)
       flash[:alert] = 'Please upload a .tsv file'
       return redirect_to new_company_path
     end
     parsed_file = CSV.read params[:company][:upload].tempfile, col_sep: "\t", headers: true, header_converters: :symbol
     @company.locations.build parsed_file.map(&:to_hash)
 
-    @company.save
-    redirect_to @company
+    if @company.save
+      GeocoderWorker.perform_async(@company.locations.map(&:id)) if @company.locations.present?
+      redirect_to @company
+    else
+      redirect_to new_company_path
+    end
   end
 
   def index
-    @companies = Company.all
+    @companies = Company.all.page(params[:page]).per(25)
   end
 
   def show

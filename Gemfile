@@ -31,6 +31,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'geocoder'
 gem 'kaminari', github: "amatsuda/kaminari", branch: '0-17-stable'
+gem 'sidekiq'
+gem 'sinatra', github: 'sinatra'
 
 gem 'rubocop'
 
